@@ -25,10 +25,10 @@ public class IngredientServiceimpl implements IngredientService {
         this.filesService = filesService;
     }
 
-//    @PostConstruct
-//    private void bim() {
-//        readFromIngredientsFile();
-//    }
+    @PostConstruct
+    private void bim() {
+        readFromIngredientsFile();
+    }
 
     @Override
     public Ingredient createIngredient(Ingredient ingredient) {
