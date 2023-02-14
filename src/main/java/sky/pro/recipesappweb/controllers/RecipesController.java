@@ -43,7 +43,7 @@ public class RecipesController {
             Validate.notNull(recipe.getCookingTime(),
                     "Ошибка валидации времени приготовления / cookingTime");
             Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
-                    "Ошибка валидации веса ингредиента / ingredient");
+                    "Ошибка валидации веса ингредиента / weight");
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
         }
@@ -60,7 +60,6 @@ public class RecipesController {
             summary = "Получение рецепта по id.", description = "Можно получить информацию")
     @GetMapping("/{id}")
     public ResponseEntity<Recipe> getRecipe(@PathVariable Long id) {
-        Validate.notBlank(getRecipe(id).toString(), "Строка не может быть пустая или значение null");
         return ResponseEntity.of(recipesService.getId(id));
     }
 
@@ -74,7 +73,22 @@ public class RecipesController {
             summary = "Редактирование рецепта по id.", description = "Можно изменить информацию")
     @PutMapping("/{id}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
-        Validate.notBlank(recipe.toString(), "Строка не может быть пустая или значение null");
+        try {
+            Validate.notBlank(recipe.getTitle(),
+                    "Ошибка валидации названия рецепта / title");
+            Validate.notBlank(recipe.getIngredients().iterator().next().getName(),
+                    "Ошибка валидации имени ингредиента / name");
+            Validate.notBlank(recipe.getIngredients().iterator().next().getMeasure(),
+                    "Ошибка валидации измерения количества ингредиента / measure");
+            Validate.notBlank(recipe.getCookingInstructionsSteps().stream().iterator().next().getStep(),
+                    "Ошибка валидации шагов приготовления / cookingInstructionsSteps");
+            Validate.notNull(recipe.getCookingTime(),
+                    "Ошибка валидации времени приготовления / cookingTime");
+            Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
+                    "Ошибка валидации веса ингредиента / weight");
+        } catch (Exception e) {
+            throw new ValidationException(e.getMessage());
+        }
         return ResponseEntity.of(recipesService.updateRecipe(id, recipe));
     }
 

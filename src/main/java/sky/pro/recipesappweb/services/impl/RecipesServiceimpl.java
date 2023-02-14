@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import sky.pro.recipesappweb.exception.ValidationException;
 import sky.pro.recipesappweb.model.Recipe;
 import sky.pro.recipesappweb.services.FilesService;
 import sky.pro.recipesappweb.services.RecipesService;
+
 import java.util.*;
 
 
@@ -16,11 +18,15 @@ public class RecipesServiceimpl implements RecipesService {
 
     private static Map<Long, Recipe> recipesMap = new HashMap<>();
     private long generatedId = 1L;
-    final private FilesService filesService;
+    private final FilesService filesService;
 
     public RecipesServiceimpl(FilesService filesService) {
         this.filesService = filesService;
     }
+//    @PostConstruct
+//    private void bzik(){
+//        readFromFile();
+//    }
 
     @Override
     public Recipe createRecipe(Recipe recipe) {
@@ -30,12 +36,12 @@ public class RecipesServiceimpl implements RecipesService {
 
     @Override
     public Optional<Recipe> getId(Long id) {
-        readFromFile();
         return Optional.ofNullable(recipesMap.get(id));
     }
 
     @Override
     public Optional<Recipe> updateRecipe(Long id, Recipe recipe) {
+        saveToFile();
         return Optional.ofNullable(recipesMap.replace(id, recipe));
     }
 
@@ -61,10 +67,10 @@ public class RecipesServiceimpl implements RecipesService {
     private void readFromFile() {
         try {
             String json = filesService.readFromFile();
-            recipesMap = new ObjectMapper().readValue(json, new TypeReference<Map<Long, Recipe>>() {
+            recipesMap = new ObjectMapper().readValue(json, new TypeReference<HashMap<Long, Recipe>>() {
             });
         } catch (JsonProcessingException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 }
