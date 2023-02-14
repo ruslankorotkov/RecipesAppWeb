@@ -22,7 +22,7 @@ public class FirstController {
     public String info() {
         return "<h2><center>info:</center></h2>" +
                 "<h3><center>имя ученика: Руслан </center></h3>" +
-                "<h4><center>название проекта: RecipesApp</center></h4>" +
+                "<h4><center>название проекта: RecipesAppWeb</center></h4>" +
                 "<h5><center>дата создания проекта: 02/02/2023 </center></h5>" +
                 "<h6><center>описание проекта: приложение для сайта рецептов</center></h6>";
     }

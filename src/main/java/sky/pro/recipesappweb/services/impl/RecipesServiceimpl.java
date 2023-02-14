@@ -4,11 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
-import sky.pro.recipesappweb.exception.ValidationException;
 import sky.pro.recipesappweb.model.Recipe;
 import sky.pro.recipesappweb.services.FilesService;
 import sky.pro.recipesappweb.services.RecipesService;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 
@@ -23,10 +23,10 @@ public class RecipesServiceimpl implements RecipesService {
     public RecipesServiceimpl(FilesService filesService) {
         this.filesService = filesService;
     }
-//    @PostConstruct
-//    private void bzik(){
-//        readFromFile();
-//    }
+    @PostConstruct
+    private void bom(){
+        readFromFile();
+    }
 
     @Override
     public Recipe createRecipe(Recipe recipe) {
