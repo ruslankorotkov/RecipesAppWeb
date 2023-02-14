@@ -32,7 +32,7 @@ public class IngredientServiceimpl implements IngredientService {
 
     @Override
     public Ingredient createIngredient(Ingredient ingredient) {
-//        saveToIngredientsFile();
+        saveToIngredientsFile();
         return ingredientMap.put(generatedId++, ingredient);
     }
 
@@ -43,7 +43,7 @@ public class IngredientServiceimpl implements IngredientService {
 
     @Override
     public Optional<Ingredient> updateIngredient(Long id, Ingredient ingredient) {
-//        saveToIngredientsFile();
+        saveToIngredientsFile();
         return Optional.ofNullable(ingredientMap.replace(id, ingredient));
     }
 
@@ -57,22 +57,22 @@ public class IngredientServiceimpl implements IngredientService {
         return ingredientMap;
     }
 
-//    private void saveToIngredientsFile() {
-//        try {
-//            String json = new ObjectMapper().writeValueAsString(ingredientMap);
-//            filesService.saveToIngredientsFile(json);
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    private void readFromIngredientsFile() {
-//        try {
-//            String json = filesService.readFromIngredientsFile();
-//            ingredientMap = new ObjectMapper().readValue(json, new TypeReference<HashMap<Long, Ingredient>>() {
-//            });
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    private void saveToIngredientsFile() {
+        try {
+            String json = new ObjectMapper().writeValueAsString(ingredientMap);
+            filesService.saveToIngredientsFile(json);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void readFromIngredientsFile() {
+        try {
+            String json = filesService.readFromIngredientsFile();
+            ingredientMap = new ObjectMapper().readValue(json, new TypeReference<HashMap<Long, Ingredient>>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -23,10 +23,10 @@ public class RecipesServiceimpl implements RecipesService {
     public RecipesServiceimpl(FilesService filesService) {
         this.filesService = filesService;
     }
-    @PostConstruct
-    private void bom(){
-        readFromFile();
-    }
+//    @PostConstruct
+//    private void bom(){
+//        readFromFile();
+//    }
 
     @Override
     public Recipe createRecipe(Recipe recipe) {

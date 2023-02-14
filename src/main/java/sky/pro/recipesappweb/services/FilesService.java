@@ -6,7 +6,7 @@ public interface FilesService {
 
     String readFromFile();
 
-//    boolean saveToIngredientsFile(String json);
-//
-//    String readFromIngredientsFile();
+    boolean saveToIngredientsFile(String json);
+
+    String readFromIngredientsFile();
 }
