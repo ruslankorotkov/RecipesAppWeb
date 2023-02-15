@@ -23,8 +23,9 @@ public class RecipesServiceimpl implements RecipesService {
     public RecipesServiceimpl(FilesService filesService) {
         this.filesService = filesService;
     }
+
     @PostConstruct
-    private void bom(){
+    private void bom() {
         readFromFile();
     }
 
