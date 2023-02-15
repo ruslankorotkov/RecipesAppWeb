@@ -15,7 +15,6 @@ import java.util.*;
 @Service
 public class RecipesServiceimpl implements RecipesService {
 
-
     private static Map<Long, Recipe> recipesMap = new HashMap<>();
     private long generatedId = 1L;
     private final FilesService filesService;

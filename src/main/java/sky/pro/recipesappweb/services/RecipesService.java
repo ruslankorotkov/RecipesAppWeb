@@ -7,7 +7,6 @@ import java.util.Optional;
 
 
 public interface RecipesService {
-
     Recipe createRecipe(Recipe recipe);
 
     Optional<Recipe> getId(Long id);
