@@ -128,18 +128,34 @@ public class RecipesServiceimpl implements RecipesService {
         Path path = filesService.getIngredientsFile().toPath();
         for (Recipe element : recipesMap.values()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-                writer.append(
-                        ""+element.getTitle() +
-                        " " + element.getCookingTimeList().stream().iterator().next().getTitleCookingTime() +
-                        " " + element.getCookingTimeList().stream().iterator().next().getCookingTime() +
-                        " " + element.getCookingTimeList().stream().iterator().next().getTitleMeasure() +
-                        " " + element.getTitleIngredients() +
-                        " " + element.getIngredients().stream().iterator().next().getName() +
-                        " " + element.getIngredients().stream().iterator().next().getWeight() +
-                        " " + element.getIngredients().stream().iterator().next().getMeasure() +
-                        " " + element.getTitleCookingInstructionsSteps() +
-                        " " + element.getCookingInstructionsSteps().stream().iterator().next().getStep()+
-                                " "
+                writer.append(element.toString()
+//                        " " + element.getTitle() +
+//                                " " + element.getCookingTimeList().stream().iterator().next().getTitleCookingTime() +
+//                                " " + element.getCookingTimeList().stream().iterator().next().getCookingTime() +
+//                                " " + element.getCookingTimeList().stream().iterator().next().getTitleMeasure() +
+//                                " " + element.getTitleIngredients() +
+//                                " "
+//                );
+//                writer.append("\n");
+//            }
+//        }
+//        for (Recipe element : recipesMap.values()) {
+//            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+//                writer.append(
+//                        " " + element.getIngredients().listIterator().next().getName() +
+//                                " " + element.getIngredients().listIterator().next().getWeight() +
+//                                " " + element.getIngredients().listIterator().next().getMeasure() +
+//                                " "
+//                );
+//                writer.append("\n");
+//            }
+//        }
+//        for (Recipe element : recipesMap.values()) {
+//            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+//                writer.append(
+//                        " " + element.getTitleCookingInstructionsSteps() +
+//                                " " + element.getCookingInstructionsSteps().stream().iterator().next().getStep() +
+//                                " "
                 );
                 writer.append("\n");
             }
