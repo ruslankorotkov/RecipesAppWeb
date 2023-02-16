@@ -1,6 +1,9 @@
 package sky.pro.recipesappweb.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.InputStreamResource;
@@ -105,26 +108,8 @@ public class FilesController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @Operation(method = "Данные всех рецептов в формате txt.",
-            summary = "Данные всех рецептов в формате txt, можете загрузить файл",
-            description = "Можно получить данные в формате txt")
-    @GetMapping("/AllRecipes")
-    public ResponseEntity<Object> getAllRecipes() {
-        try {
-            Path path = filesService.getRecipesFile().toPath();
-            if (Files.size(path) == 0) {
-                return ResponseEntity.noContent().build();
-            }
-            InputStreamResource resource = new InputStreamResource(new FileInputStream(path.toFile()));
-            return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).contentLength(Files.size(path))
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"AllRecipes.txt\"")
-                    .body(resource);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(e.toString());
-        }
-    }
-
+    @ApiResponses(value = {@ApiResponse(responseCode = "200",
+            description = "всё хорошо, запрос выполнился")})
     @Operation(method = "export файла рецепта формат txt.", summary = "Можете загрузить (принять) файл формате txt",
             description = "Можно получить файл в формате txt")
     @GetMapping(value = "/export-Allrecipes")

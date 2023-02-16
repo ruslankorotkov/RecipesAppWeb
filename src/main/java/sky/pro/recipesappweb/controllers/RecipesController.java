@@ -93,4 +93,25 @@ public class RecipesController {
     public ResponseEntity<Map<Long, Recipe>> getAllRecipes() {
         return ResponseEntity.ok(recipesService.allRecipes());
     }
+
+
+    @Operation(method = "Данные всех рецептов в формате txt.",
+            summary = "Данные всех рецептов в формате txt, можете загрузить файл",
+            description = "Можно получить данные в формате txt")
+    @GetMapping("/AllRecipes")
+    public ResponseEntity<Object> getAllRecipesExport() {
+        try {
+            Path path = recipesService.createAllRecipes();
+            if (Files.size(path) == 0) {
+                return ResponseEntity.noContent().build();
+            }
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(path.toFile()));
+            return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).contentLength(Files.size(path))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"AllRecipes.txt\"")
+                    .body(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.toString());
+        }
+    }
 }

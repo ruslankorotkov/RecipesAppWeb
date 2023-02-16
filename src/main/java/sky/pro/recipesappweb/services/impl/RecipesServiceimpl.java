@@ -11,6 +11,11 @@ import sky.pro.recipesappweb.services.FilesService;
 import sky.pro.recipesappweb.services.RecipesService;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 
@@ -116,6 +121,30 @@ public class RecipesServiceimpl implements RecipesService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Path createAllRecipes() throws IOException {
+        Path path = filesService.getIngredientsFile().toPath();
+        for (Recipe element : recipesMap.values()) {
+            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
+                writer.append(
+                        ""+element.getTitle() +
+                        " " + element.getCookingTimeList().stream().iterator().next().getTitleCookingTime() +
+                        " " + element.getCookingTimeList().stream().iterator().next().getCookingTime() +
+                        " " + element.getCookingTimeList().stream().iterator().next().getTitleMeasure() +
+                        " " + element.getTitleIngredients() +
+                        " " + element.getIngredients().stream().iterator().next().getName() +
+                        " " + element.getIngredients().stream().iterator().next().getWeight() +
+                        " " + element.getIngredients().stream().iterator().next().getMeasure() +
+                        " " + element.getTitleCookingInstructionsSteps() +
+                        " " + element.getCookingInstructionsSteps().stream().iterator().next().getStep()+
+                                " "
+                );
+                writer.append("\n");
+            }
+        }
+        return path;
     }
 }
 
