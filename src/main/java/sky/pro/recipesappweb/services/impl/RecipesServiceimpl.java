@@ -3,7 +3,9 @@ package sky.pro.recipesappweb.services.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
+import sky.pro.recipesappweb.exception.ValidationException;
 import sky.pro.recipesappweb.model.Recipe;
 import sky.pro.recipesappweb.services.FilesService;
 import sky.pro.recipesappweb.services.RecipesService;
@@ -30,8 +32,25 @@ public class RecipesServiceimpl implements RecipesService {
 
     @Override
     public Recipe createRecipe(Recipe recipe) {
+        try {
+            Validate.notBlank(recipe.getTitle(),
+                    "Ошибка валидации названия рецепта / title");
+            Validate.notBlank(recipe.getIngredients().iterator().next().getName(),
+                    "Ошибка валидации имени ингредиента / name");
+            Validate.notBlank(recipe.getIngredients().iterator().next().getMeasure(),
+                    "Ошибка валидации измерения количества ингредиента / measure");
+            Validate.notBlank(recipe.getCookingInstructionsSteps().stream().iterator().next().getStep(),
+                    "Ошибка валидации шагов приготовления / cookingInstructionsSteps");
+            Validate.notNull(recipe.getCookingTime(),
+                    "Ошибка валидации времени приготовления / cookingTime");
+            Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
+                    "Ошибка валидации веса ингредиента / weight");
+        } catch (Exception e) {
+            throw new ValidationException(e.getMessage());
+        }
+         recipesMap.put(generatedId++, recipe);
         saveToFile();
-        return recipesMap.put(generatedId++, recipe);
+        return recipe;
     }
 
     @Override
@@ -41,8 +60,25 @@ public class RecipesServiceimpl implements RecipesService {
 
     @Override
     public Optional<Recipe> updateRecipe(Long id, Recipe recipe) {
+        try {
+            Validate.notBlank(recipe.getTitle(),
+                    "Ошибка валидации названия рецепта / title");
+            Validate.notBlank(recipe.getIngredients().iterator().next().getName(),
+                    "Ошибка валидации имени ингредиента / name");
+            Validate.notBlank(recipe.getIngredients().iterator().next().getMeasure(),
+                    "Ошибка валидации измерения количества ингредиента / measure");
+            Validate.notBlank(recipe.getCookingInstructionsSteps().stream().iterator().next().getStep(),
+                    "Ошибка валидации шагов приготовления / cookingInstructionsSteps");
+            Validate.notNull(recipe.getCookingTime(),
+                    "Ошибка валидации времени приготовления / cookingTime");
+            Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
+                    "Ошибка валидации веса ингредиента / weight");
+        } catch (Exception e) {
+            throw new ValidationException(e.getMessage());
+        }
+         Optional.ofNullable(recipesMap.replace(id, recipe));
         saveToFile();
-        return Optional.ofNullable(recipesMap.replace(id, recipe));
+        return Optional.of(recipe);
     }
 
     @Override
@@ -55,7 +91,7 @@ public class RecipesServiceimpl implements RecipesService {
         return recipesMap;
     }
 
-    private void saveToFile() {
+    public void saveToFile() {
         try {
             String json = new ObjectMapper().writeValueAsString(recipesMap);
             filesService.saveToFile(json);
@@ -64,7 +100,7 @@ public class RecipesServiceimpl implements RecipesService {
         }
     }
 
-    private void readFromFile() {
+    public void readFromFile() {
         try {
             String json = filesService.readFromFile();
             recipesMap = new ObjectMapper().readValue(json, new TypeReference<HashMap<Long, Recipe>>() {

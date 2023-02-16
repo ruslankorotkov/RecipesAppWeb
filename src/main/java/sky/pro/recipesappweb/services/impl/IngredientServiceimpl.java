@@ -3,7 +3,9 @@ package sky.pro.recipesappweb.services.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
+import sky.pro.recipesappweb.exception.ValidationException;
 import sky.pro.recipesappweb.model.Ingredient;
 import sky.pro.recipesappweb.services.FilesService;
 import sky.pro.recipesappweb.services.IngredientService;
@@ -32,8 +34,19 @@ public class IngredientServiceimpl implements IngredientService {
 
     @Override
     public Ingredient createIngredient(Ingredient ingredient) {
+        try {
+            Validate.notBlank(ingredient.getName(),
+                    "Ошибка валидации названия ингредиента / name");
+            Validate.notBlank(ingredient.getMeasure(),
+                    "Ошибка валидации измерения количества ингредиента / measure");
+            Validate.notNull(ingredient.getWeight(),
+                    "Ошибка валидации веса ингредиента / weight");
+        } catch (Exception e) {
+            throw new ValidationException(e.getMessage());
+        }
+         ingredientMap.put(generatedId++, ingredient);
         saveToIngredientsFile();
-        return ingredientMap.put(generatedId++, ingredient);
+        return ingredient;
     }
 
     @Override
@@ -43,8 +56,19 @@ public class IngredientServiceimpl implements IngredientService {
 
     @Override
     public Optional<Ingredient> updateIngredient(Long id, Ingredient ingredient) {
+        try {
+            Validate.notBlank(ingredient.getName(),
+                    "Ошибка валидации названия ингредиента / name");
+            Validate.notBlank(ingredient.getMeasure(),
+                    "Ошибка валидации измерения количества ингредиента / measure");
+            Validate.notNull(ingredient.getWeight(),
+                    "Ошибка валидации веса ингредиента / weight");
+        } catch (Exception e) {
+            throw new ValidationException(e.getMessage());
+        }
+         Optional.ofNullable(ingredientMap.replace(id, ingredient));
         saveToIngredientsFile();
-        return Optional.ofNullable(ingredientMap.replace(id, ingredient));
+        return Optional.of(ingredient);
     }
 
     @Override
