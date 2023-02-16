@@ -11,9 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sky.pro.recipesappweb.exception.ValidationException;
+import sky.pro.recipesappweb.model.Recipe;
 import sky.pro.recipesappweb.services.FilesService;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
 
 @Tag(name = "Контроллер export/import", description = "CRUD операции и другие эгдпоинты для выгрузки и загрузки файлов")
 @RestController
@@ -25,7 +29,7 @@ public class FilesController {
         this.filesService = filesService;
     }
 
-    @Operation(method = "export файла рецепта.", summary = "Можете загрузить (принять) файл",
+    @Operation(method = "export файла рецепта формат json.", summary = "Можете загрузить (принять) файл формат json",
             description = "Можно получить файл")
     @GetMapping(value = "/export-recipes")
     public ResponseEntity<InputStreamResource> dowloadRecipeFile() throws FileNotFoundException {
@@ -69,7 +73,7 @@ public class FilesController {
 //        }
     }
 
-    @Operation(method = "export файла рецепта.", summary = "Можете загрузить (принять) файл",
+    @Operation(method = "export файла ингредиента формат json.", summary = "Можете загрузить (принять) файл формат json",
             description = "Можно получить файл")
     @GetMapping(value = "/export-ingredients")
     public ResponseEntity<InputStreamResource> dowloadIngredientsFile() throws FileNotFoundException {
@@ -84,7 +88,7 @@ public class FilesController {
         }
     }
 
-    @Operation(method = "import файла рецепта.", summary = "Можете выгрузить (отправить) файл",
+    @Operation(method = "import файла ингредиента.", summary = "Можете выгрузить (отправить) файл",
             description = "Можно отправить файл")
     @PostMapping(value = "/import-ingredients", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> uploadIngredientsFile(@RequestParam MultipartFile file) {
@@ -99,5 +103,40 @@ public class FilesController {
             throw new ValidationException("Ошибка при выгрузке файла / uploadIngredientsFile ");
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @Operation(method = "Данные всех рецептов в формате txt.",
+            summary = "Данные всех рецептов в формате txt, можете загрузить файл",
+            description = "Можно получить данные в формате txt")
+    @GetMapping("/AllRecipes")
+    public ResponseEntity<Object> getAllRecipes() {
+        try {
+            Path path = filesService.getRecipesFile().toPath();
+            if (Files.size(path) == 0) {
+                return ResponseEntity.noContent().build();
+            }
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(path.toFile()));
+            return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).contentLength(Files.size(path))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"AllRecipes.txt\"")
+                    .body(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.toString());
+        }
+    }
+
+    @Operation(method = "export файла рецепта формат txt.", summary = "Можете загрузить (принять) файл формате txt",
+            description = "Можно получить файл в формате txt")
+    @GetMapping(value = "/export-Allrecipes")
+    public ResponseEntity<InputStreamResource> dowloadAllRecipeFile() throws FileNotFoundException {
+        File file = filesService.getRecipesFile();
+        if (file.exists()) {
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+            return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).contentLength(file.length())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"AllRecipesLog.txt\"")
+                    .body(resource);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 }
