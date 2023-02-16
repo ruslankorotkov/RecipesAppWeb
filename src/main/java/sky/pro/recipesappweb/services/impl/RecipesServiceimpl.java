@@ -15,6 +15,7 @@ import sky.pro.recipesappweb.services.RecipesService;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -123,11 +124,9 @@ public class RecipesServiceimpl implements RecipesService {
         String listStop = "*";
         for (Recipe element : recipesMap.values()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-                writer.append("\n").append(recipesMap.toString()).append("\n");
-                writer.append("\nВремя приготовления::\n");
-//                for (Recipe elem: element.getCookingTime()){
-//                    writer.append(listStop).append(elem.toString()).append("\n");
-//                }
+
+                    writer.append(element.getTitle() + "\nВремя приготовления: " + element.getCookingTime()).append(" минут\n");
+
                 writer.append("\nИнгредиенты:\n");
                 for (Ingredient ele : element.getIngredients()) {
                     writer.append(listStop).append(ele.toString()).append("\n");

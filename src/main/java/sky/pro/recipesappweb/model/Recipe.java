@@ -16,15 +16,14 @@ public class Recipe {
     private String title;
     private int cookingTime;
     private List<Ingredient> ingredients;
+    private List<Step> cookingInstructionsSteps;
 
     @Override
     public String toString() {
         return "" +
                 " " + title +
-                " " + cookingTime + " минут. " +
-                " " + ingredients +
-                " " + cookingInstructionsSteps;
+                " " + cookingTime;
     }
 
-    private List<Step> cookingInstructionsSteps;
+
 }

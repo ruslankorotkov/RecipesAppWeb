@@ -24,7 +24,7 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public boolean saveToFile(String json) {
         try {
-//            deleteFile();
+            deleteFile();
             Files.writeString(Path.of(recipesFilePath, recipesFileName), json);
             return true;
         } catch (IOException e) {
