@@ -41,14 +41,18 @@ public class RecipesServiceimpl implements RecipesService {
                     "Ошибка валидации измерения количества ингредиента / measure");
             Validate.notBlank(recipe.getCookingInstructionsSteps().stream().iterator().next().getStep(),
                     "Ошибка валидации шагов приготовления / cookingInstructionsSteps");
-            Validate.notNull(recipe.getCookingTime(),
+            Validate.notBlank(recipe.getCookingTimeList().stream().iterator().next().getTitleCookingTime(),
+                    "Ошибка валидации времени приготовления / TitleCookingTime");
+            Validate.notNull(recipe.getCookingTimeList().stream().iterator().next().getCookingTime(),
+                    "Ошибка валидации времени приготовления / cookingTime");
+            Validate.notBlank(recipe.getCookingTimeList().stream().iterator().next().getTitleMeasure(),
                     "Ошибка валидации времени приготовления / cookingTime");
             Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
                     "Ошибка валидации веса ингредиента / weight");
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
         }
-         recipesMap.put(generatedId++, recipe);
+        recipesMap.put(generatedId++, recipe);
         saveToFile();
         return recipe;
     }
@@ -69,14 +73,18 @@ public class RecipesServiceimpl implements RecipesService {
                     "Ошибка валидации измерения количества ингредиента / measure");
             Validate.notBlank(recipe.getCookingInstructionsSteps().stream().iterator().next().getStep(),
                     "Ошибка валидации шагов приготовления / cookingInstructionsSteps");
-            Validate.notNull(recipe.getCookingTime(),
+            Validate.notBlank(recipe.getCookingTimeList().stream().iterator().next().getTitleCookingTime(),
+                    "Ошибка валидации времени приготовления / TitleCookingTime");
+            Validate.notNull(recipe.getCookingTimeList().stream().iterator().next().getCookingTime(),
+                    "Ошибка валидации времени приготовления / cookingTime");
+            Validate.notBlank(recipe.getCookingTimeList().stream().iterator().next().getTitleMeasure(),
                     "Ошибка валидации времени приготовления / cookingTime");
             Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
                     "Ошибка валидации веса ингредиента / weight");
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
         }
-         Optional.ofNullable(recipesMap.replace(id, recipe));
+        Optional.ofNullable(recipesMap.replace(id, recipe));
         saveToFile();
         return Optional.of(recipe);
     }
