@@ -1,14 +1,7 @@
 {
   "1": {
     "title": "Рецепт 1 Сырники из творога",
-    "cookingTimeList": [
-      {
-        "titleCookingTime": "Время приготовления",
-        "cookingTime": 30,
-        "titleMeasure": "минут"
-      }
-    ],
-    "titleIngredients": "Ингредиенты:",
+    "cookingTime": 30,
     "ingredients": [
       {
         "name": "Творог",
@@ -31,7 +24,6 @@
         "measure": "ст.л."
       }
     ],
-    "titleCookingInstructionsSteps": "Инструкция приготовления:",
     "cookingInstructionsSteps": [
       {
         "step": "Шаг 1:Смешайте весь творог с яйцами, сахаром и тщательно всё перемешайте."
@@ -55,15 +47,7 @@
   },
   "2": {
     "title": " Рецепт 2 Салат из красной фасоли с творожным сыром, красным луком и сезонным салатом. ",
-    "cookingTimeList": [
-      {
-        "titleCookingTime": "Время приготовления",
-        "cookingTime": 7,
-        "titleMeasure": "минут"
-      }
-    ],
     "cookingTime": 7,
-    "titleIngredients": "Ингредиенты:",
     "ingredients": [
       {
         "name": "Специи",
@@ -106,7 +90,6 @@
         "measure": "г."
       }
     ],
-    "titleCookingInstructionsSteps": "Инструкция приготовления:",
     "cookingInstructionsSteps": [
       {
         "step": "Шаг 1:Открыть две банки красной фасоли в собственном соку, слить сок и промыть фасоль холодной водой."
@@ -121,15 +104,7 @@
   },
   "3": {
     "title": "Рецепт 3 Чечевичный суп с мятой",
-    "cookingTimeList": [
-      {
-        "titleCookingTime": "Время приготовления",
-        "cookingTime": 30,
-        "titleMeasure": "минут"
-      }
-    ],
     "cookingTime": 30,
-    "titleIngredients": "Ингредиенты:",
     "ingredients": [
       {
         "name": "Красная чечевица",
@@ -182,7 +157,6 @@
         "measure": "по вкусу"
       }
     ],
-    "titleCookingInstructionsSteps": "Инструкция приготовления:",
     "cookingInstructionsSteps": [
       {
         "step": "Шаг 1:В небольшую кастрюлю налить литр воды и засыпать промытую чечевицу. Поставить кастрюлю на средний огонь."
@@ -200,15 +174,7 @@
   },
   "4": {
     "title": "Рецепт 4 Салат с креветками и кунжутом",
-    "cookingTimeList": [
-      {
-        "titleCookingTime": "Время приготовления",
-        "cookingTime": 20,
-        "titleMeasure": "минут"
-      }
-    ],
     "cookingTime": 20,
-    "titleIngredients": "Ингредиенты:",
     "ingredients": [
       {
         "name": "Помидоры",
@@ -246,7 +212,6 @@
         "measure": "ст.л."
       }
     ],
-    "titleCookingInstructionsSteps": "Инструкция приготовления:",
     "cookingInstructionsSteps": [
       {
         "step": "Шаг 1:Порезать овощи крупно, салат порвать на куски."
@@ -267,15 +232,7 @@
   },
   "5": {
     "title": "Рецепт 5 Творожные пончики в сахарной пудре",
-    "cookingTimeList": [
-      {
-        "titleCookingTime": "Время приготовления",
-        "cookingTime": 40,
-        "titleMeasure": "минут"
-      }
-    ],
     "cookingTime": 40,
-    "titleIngredients": "Ингредиенты:",
     "ingredients": [
       {
         "name": "Творог",
@@ -313,7 +270,6 @@
         "measure": "по вкусу"
       }
     ],
-    "titleCookingInstructionsSteps": "Инструкция приготовления:",
     "cookingInstructionsSteps": [
       {
         "step": "Шаг 1:В миске смешать творог, яйца, муку, сахар, соду и соль до однородной консистенции."

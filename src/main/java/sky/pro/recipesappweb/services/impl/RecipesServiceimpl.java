@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 import sky.pro.recipesappweb.exception.ValidationException;
+import sky.pro.recipesappweb.model.Ingredient;
 import sky.pro.recipesappweb.model.Recipe;
+import sky.pro.recipesappweb.model.Step;
 import sky.pro.recipesappweb.services.FilesService;
 import sky.pro.recipesappweb.services.RecipesService;
 
@@ -31,7 +33,7 @@ public class RecipesServiceimpl implements RecipesService {
     }
 
     @PostConstruct
-    private void bom() {
+    private void init() {
         readFromFile();
     }
 
@@ -46,11 +48,7 @@ public class RecipesServiceimpl implements RecipesService {
                     "Ошибка валидации измерения количества ингредиента / measure");
             Validate.notBlank(recipe.getCookingInstructionsSteps().stream().iterator().next().getStep(),
                     "Ошибка валидации шагов приготовления / cookingInstructionsSteps");
-            Validate.notBlank(recipe.getCookingTimeList().stream().iterator().next().getTitleCookingTime(),
-                    "Ошибка валидации времени приготовления / TitleCookingTime");
-            Validate.notNull(recipe.getCookingTimeList().stream().iterator().next().getCookingTime(),
-                    "Ошибка валидации времени приготовления / cookingTime");
-            Validate.notBlank(recipe.getCookingTimeList().stream().iterator().next().getTitleMeasure(),
+            Validate.notNull(recipe.getCookingTime(),
                     "Ошибка валидации времени приготовления / cookingTime");
             Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
                     "Ошибка валидации веса ингредиента / weight");
@@ -78,11 +76,7 @@ public class RecipesServiceimpl implements RecipesService {
                     "Ошибка валидации измерения количества ингредиента / measure");
             Validate.notBlank(recipe.getCookingInstructionsSteps().stream().iterator().next().getStep(),
                     "Ошибка валидации шагов приготовления / cookingInstructionsSteps");
-            Validate.notBlank(recipe.getCookingTimeList().stream().iterator().next().getTitleCookingTime(),
-                    "Ошибка валидации времени приготовления / TitleCookingTime");
-            Validate.notNull(recipe.getCookingTimeList().stream().iterator().next().getCookingTime(),
-                    "Ошибка валидации времени приготовления / cookingTime");
-            Validate.notBlank(recipe.getCookingTimeList().stream().iterator().next().getTitleMeasure(),
+            Validate.notNull(recipe.getCookingTime(),
                     "Ошибка валидации времени приготовления / cookingTime");
             Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
                     "Ошибка валидации веса ингредиента / weight");
@@ -126,38 +120,23 @@ public class RecipesServiceimpl implements RecipesService {
     @Override
     public Path createAllRecipes() throws IOException {
         Path path = filesService.getIngredientsFile().toPath();
+        String listStop = "*";
         for (Recipe element : recipesMap.values()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-                writer.append(element.toString()
-//                        " " + element.getTitle() +
-//                                " " + element.getCookingTimeList().stream().iterator().next().getTitleCookingTime() +
-//                                " " + element.getCookingTimeList().stream().iterator().next().getCookingTime() +
-//                                " " + element.getCookingTimeList().stream().iterator().next().getTitleMeasure() +
-//                                " " + element.getTitleIngredients() +
-//                                " "
-//                );
-//                writer.append("\n");
-//            }
-//        }
-//        for (Recipe element : recipesMap.values()) {
-//            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-//                writer.append(
-//                        " " + element.getIngredients().listIterator().next().getName() +
-//                                " " + element.getIngredients().listIterator().next().getWeight() +
-//                                " " + element.getIngredients().listIterator().next().getMeasure() +
-//                                " "
-//                );
-//                writer.append("\n");
-//            }
-//        }
-//        for (Recipe element : recipesMap.values()) {
-//            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-//                writer.append(
-//                        " " + element.getTitleCookingInstructionsSteps() +
-//                                " " + element.getCookingInstructionsSteps().stream().iterator().next().getStep() +
-//                                " "
-                );
-                writer.append("\n");
+                writer.append("\n").append(recipesMap.toString()).append("\n");
+                writer.append("\nВремя приготовления::\n");
+//                for (Recipe elem: element.getCookingTime()){
+//                    writer.append(listStop).append(elem.toString()).append("\n");
+//                }
+                writer.append("\nИнгредиенты:\n");
+                for (Ingredient ele : element.getIngredients()) {
+                    writer.append(listStop).append(ele.toString()).append("\n");
+                }
+                writer.append("\nИнструкция приготовления:\n");
+                for (Step elem : element.getCookingInstructionsSteps()) {
+                    writer.append(listStop).append(elem.toString()).append("\n");
+                }
+                writer.append("\n").toString();
             }
         }
         return path;

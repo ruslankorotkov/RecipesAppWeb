@@ -7,4 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Step {
     private String step;
+
+    @Override
+    public String toString() {
+        return "" +
+                " " + step;
+    }
 }

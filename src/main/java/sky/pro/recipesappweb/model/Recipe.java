@@ -14,9 +14,17 @@ import java.util.List;
 @NoArgsConstructor
 public class Recipe {
     private String title;
-    private List<CookingTime> cookingTimeList;
-    private String titleIngredients;
+    private int cookingTime;
     private List<Ingredient> ingredients;
-    private String titleCookingInstructionsSteps;
+
+    @Override
+    public String toString() {
+        return "" +
+                " " + title +
+                " " + cookingTime + " минут. " +
+                " " + ingredients +
+                " " + cookingInstructionsSteps;
+    }
+
     private List<Step> cookingInstructionsSteps;
 }

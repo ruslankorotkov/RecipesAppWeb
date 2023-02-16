@@ -11,4 +11,12 @@ public class Ingredient {
     private String name;
     private int weight;
     private String measure;
+
+    @Override
+    public String toString() {
+        return "" +
+                " " + name +
+                " " + weight +
+                " " + measure;
+    }
 }
