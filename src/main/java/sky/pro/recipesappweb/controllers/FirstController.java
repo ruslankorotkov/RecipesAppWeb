@@ -23,8 +23,7 @@ public class FirstController {
             @ApiResponse(responseCode = "500",
                     description = "Во время выполнения запроса произошла ошибка на сервере"),
             @ApiResponse(responseCode = "400",
-                    description = "Есть ошибка в параметрах запроса",
-                    content = {@Content(mediaType = "application/json")})})
+                    description = "Есть ошибка в параметрах запроса")})
     @Operation(method = "Метод получения информации о проекте (/info)", summary = "Можете получить информацию", description = "Можно получить информацию")
     @GetMapping("/info")
     public String info() {
