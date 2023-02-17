@@ -120,7 +120,7 @@ public class RecipesServiceimpl implements RecipesService {
 
     @Override
     public Path createAllRecipes() throws IOException {
-        Path path = filesService.getIngredientsFile().toPath();
+        Path path = filesService.getAllRecipes().toPath();
         String listStop = "*";
         for (Recipe element : recipesMap.values()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {

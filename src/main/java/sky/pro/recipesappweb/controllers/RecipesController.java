@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
-import java.util.Optional;
 
 @Tag(name = "Рецепты", description = "CRUD операции и другие эгдпоинты для работы с рецептами")
 @RestController
@@ -112,6 +111,7 @@ public class RecipesController {
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.toString());
+
         }
     }
 }

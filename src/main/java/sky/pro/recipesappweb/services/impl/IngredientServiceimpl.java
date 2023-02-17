@@ -44,7 +44,7 @@ public class IngredientServiceimpl implements IngredientService {
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
         }
-         ingredientMap.put(generatedId++, ingredient);
+        ingredientMap.put(generatedId++, ingredient);
         saveToIngredientsFile();
         return ingredient;
     }
@@ -66,7 +66,7 @@ public class IngredientServiceimpl implements IngredientService {
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
         }
-         Optional.ofNullable(ingredientMap.replace(id, ingredient));
+        Optional.ofNullable(ingredientMap.replace(id, ingredient));
         saveToIngredientsFile();
         return Optional.of(ingredient);
     }
