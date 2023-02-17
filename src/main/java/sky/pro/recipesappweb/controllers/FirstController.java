@@ -16,8 +16,16 @@ public class FirstController {
         return "<h1 style=\"text-align: center\">Приложение запущено</h1>";
     }
 
+    @ApiResponses(value = {@ApiResponse(responseCode = "200",
+            description = "Всё хорошо, запрос выполнился"),
+            @ApiResponse(responseCode = "404",
+                    description = "URL неверный или такого действия нет в веб-приложении"),
+            @ApiResponse(responseCode = "500",
+                    description = "Во время выполнения запроса произошла ошибка на сервере"),
+            @ApiResponse(responseCode = "400",
+                    description = "Есть ошибка в параметрах запроса",
+                    content = {@Content(mediaType = "application/json")})})
     @Operation(method = "Метод получения информации о проекте (/info)", summary = "Можете получить информацию", description = "Можно получить информацию")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Информация была получена", content = {@Content(mediaType = "application/json")})})
     @GetMapping("/info")
     public String info() {
         return "<h2><center>info:</center></h2>" +
