@@ -15,5 +15,4 @@ public interface IngredientService {
     Optional<Ingredient> deleteIngredient(Long id);
 
     Map<Long, Ingredient> allIngredients();
-
 }

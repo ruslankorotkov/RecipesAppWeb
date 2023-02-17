@@ -18,6 +18,5 @@ public class Ingredient {
                 " " + name +
                 " " + weight +
                 " " + measure;
-
     }
 }

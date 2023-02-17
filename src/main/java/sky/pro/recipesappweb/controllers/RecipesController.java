@@ -111,7 +111,6 @@ public class RecipesController {
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(e.toString());
-
         }
     }
 }

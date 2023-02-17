@@ -24,4 +24,5 @@ public class Recipe {
                 " " + title +
                 " " + cookingTime;
     }
+
 }

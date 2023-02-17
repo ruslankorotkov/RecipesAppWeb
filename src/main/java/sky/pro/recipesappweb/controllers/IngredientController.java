@@ -76,6 +76,5 @@ public class IngredientController {
     public ResponseEntity<Map<Long, Ingredient>> getAllIngredients() {
         return ResponseEntity.ok(ingredientService.allIngredients());
     }
-
 }
 

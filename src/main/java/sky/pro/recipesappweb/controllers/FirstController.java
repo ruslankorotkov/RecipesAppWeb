@@ -26,5 +26,4 @@ public class FirstController {
                 "<h5><center>дата создания проекта: 02/02/2023 </center></h5>" +
                 "<h6><center>описание проекта: приложение для сайта рецептов</center></h6>";
     }
-
 }
