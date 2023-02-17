@@ -33,8 +33,12 @@ public class RecipesServiceimpl implements RecipesService {
     }
 
     @PostConstruct
-    private void init() {
-        readFromFile();
+    private void bom() {
+        try {
+            readFromFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
