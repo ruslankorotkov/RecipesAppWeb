@@ -22,6 +22,8 @@ public class Recipe {
     public String toString() {
         return "" +
                 " " + title +
-                " " + cookingTime;
+                " " + cookingTime +
+                " " + ingredients +
+                " " + cookingInstructionsSteps;
     }
 }

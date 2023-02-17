@@ -123,8 +123,10 @@ public class RecipesServiceimpl implements RecipesService {
         String listStop = "*";
         for (Recipe element : recipesMap.values()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-                writer.append(element.getTitle() + "\nВремя приготовления: " +
+                writer.append(element.getTitle()
+                        + "\nВремя приготовления: " +
                         element.getCookingTime()).append(" минут\n");
+
                 writer.append("\nИнгредиенты:\n");
                 for (Ingredient ele : element.getIngredients()) {
                     writer.append(listStop).append(ele.toString()).append("\n");
