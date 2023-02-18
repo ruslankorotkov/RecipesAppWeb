@@ -127,7 +127,7 @@ public class RecipesServiceimpl implements RecipesService {
         String listStop = "*";
         for (Recipe element : recipesMap.values()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-                writer.append(element.getTitle()
+                writer.append(element.getTitle()+ "\n"
                         + "\nВремя приготовления: " +
                         element.getCookingTime()).append(" минут\n");
 
@@ -139,7 +139,7 @@ public class RecipesServiceimpl implements RecipesService {
                 for (Step elem : element.getCookingInstructionsSteps()) {
                     writer.append(listStop).append(elem.toString()).append("\n");
                 }
-                writer.append("\n").toString();
+                writer.append("\n");
             }
         }
         return path;

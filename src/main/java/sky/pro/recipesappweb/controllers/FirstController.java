@@ -16,13 +16,7 @@ public class FirstController {
     }
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Всё хорошо, запрос выполнился"),
-            @ApiResponse(responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении"),
-            @ApiResponse(responseCode = "500",
-                    description = "Во время выполнения запроса произошла ошибка на сервере"),
-            @ApiResponse(responseCode = "400",
-                    description = "Есть ошибка в параметрах запроса")})
+            description = "Всё хорошо, запрос выполнился")})
     @Operation(method = "Метод получения информации о проекте (/info)", summary = "Можете получить информацию", description = "Можно получить информацию")
     @GetMapping("/info")
     public String info() {

@@ -14,13 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sky.pro.recipesappweb.exception.ValidationException;
-import sky.pro.recipesappweb.model.Recipe;
 import sky.pro.recipesappweb.services.FilesService;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Optional;
+
 
 @Tag(name = "Контроллер export/import", description = "CRUD операции и другие эгдпоинты для выгрузки и загрузки файлов")
 @RestController
@@ -34,16 +31,7 @@ public class FilesController {
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "Всё хорошо, запрос выполнился",
-            content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "500",
-                    description = "Во время выполнения запроса произошла ошибка на сервере",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "400",
-                    description = "Есть ошибка в параметрах запроса",
-                    content = {@Content(mediaType = "application/json")})})
+            content = {@Content(mediaType = "application/json")})})
     @Operation(method = "export файла рецепта формат json.", summary = "Можете загрузить (принять) файл формат json",
             description = "Можно получить файл")
     @GetMapping(value = "/export-recipes")
@@ -61,16 +49,7 @@ public class FilesController {
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "Всё хорошо, запрос выполнился",
-            content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "500",
-                    description = "Во время выполнения запроса произошла ошибка на сервере",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "400",
-                    description = "Есть ошибка в параметрах запроса",
-                    content = {@Content(mediaType = "application/json")})})
+            content = {@Content(mediaType = "application/json")})})
     @Operation(method = "import файла рецепта.", summary = "Можете выгрузить (отправить) файл",
             description = "Можно отправить файл")
     @PostMapping(value = "/import-recipes", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -102,16 +81,7 @@ public class FilesController {
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "Всё хорошо, запрос выполнился",
-            content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "500",
-                    description = "Во время выполнения запроса произошла ошибка на сервере",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "400",
-                    description = "Есть ошибка в параметрах запроса",
-                    content = {@Content(mediaType = "application/json")})})
+            content = {@Content(mediaType = "application/json")})})
     @Operation(method = "export файла ингредиента формат json.", summary = "Можете загрузить (принять) файл формат json",
             description = "Можно получить файл")
     @GetMapping(value = "/export-ingredients")
@@ -129,16 +99,7 @@ public class FilesController {
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "Всё хорошо, запрос выполнился",
-            content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "500",
-                    description = "Во время выполнения запроса произошла ошибка на сервере",
-                    content = {@Content(mediaType = "application/json")}),
-            @ApiResponse(responseCode = "400",
-                    description = "Есть ошибка в параметрах запроса",
-                    content = {@Content(mediaType = "application/json")})})
+            content = {@Content(mediaType = "application/json")})})
     @Operation(method = "import файла ингредиента.", summary = "Можете выгрузить (отправить) файл",
             description = "Можно отправить файл")
     @PostMapping(value = "/import-ingredients", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -158,16 +119,7 @@ public class FilesController {
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
             description = "Всё хорошо, запрос выполнился",
-            content = {@Content(mediaType = "application/txt")}),
-            @ApiResponse(responseCode = "404",
-                    description = "URL неверный или такого действия нет в веб-приложении",
-                    content = {@Content(mediaType = "application/txt")}),
-            @ApiResponse(responseCode = "500",
-                    description = "Во время выполнения запроса произошла ошибка на сервере",
-                    content = {@Content(mediaType = "application/txt")}),
-            @ApiResponse(responseCode = "400",
-                    description = "Есть ошибка в параметрах запроса",
-                    content = {@Content(mediaType = "application/txt")})})
+            content = {@Content(mediaType = "plain/txt")})})
     @Operation(method = "export файла рецепта формат txt.", summary = "Можете загрузить (принять) файл в формате txt",
             description = "Можно получить файл в формате txt")
     @GetMapping(value = "/export-Allrecipes")
