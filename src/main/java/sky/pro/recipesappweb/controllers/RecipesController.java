@@ -5,13 +5,18 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.lang3.Validate;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sky.pro.recipesappweb.exception.ValidationException;
 import sky.pro.recipesappweb.services.RecipesService;
 import sky.pro.recipesappweb.model.Recipe;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 
 @Tag(name = "Рецепты", description = "CRUD операции и другие эгдпоинты для работы с рецептами")
@@ -25,82 +30,121 @@ public class RecipesController {
     }
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Информация успешно была получена",
-            content = {@Content(mediaType = "application/json")})})
+            description = "Всё хорошо, запрос выполнился",
+            content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404",
+                    description = "URL неверный или такого действия нет в веб-приложении",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500",
+                    description = "Во время выполнения запроса произошла ошибка на сервере",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400",
+                    description = "Есть ошибка в параметрах запроса",
+                    content = {@Content(mediaType = "application/json")})})
     @Operation(method = "Добавление рецепта.",
             summary = "Добавление рецепта.", description = "Можно ввести информацию")
     @PostMapping("/")
     public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
-        try {
-            Validate.notBlank(recipe.getTitle(),
-                    "Ошибка валидации названия рецепта / title");
-            Validate.notBlank(recipe.getIngredients().iterator().next().getName(),
-                    "Ошибка валидации имени ингредиента / name");
-            Validate.notBlank(recipe.getIngredients().iterator().next().getMeasure(),
-                    "Ошибка валидации измерения количества ингредиента / measure");
-            Validate.notBlank(recipe.getCookingInstructionsSteps().stream().iterator().next().getStep(),
-                    "Ошибка валидации шагов приготовления / cookingInstructionsSteps");
-            Validate.notNull(recipe.getCookingTime(),
-                    "Ошибка валидации времени приготовления / cookingTime");
-            Validate.notNull(recipe.getIngredients().iterator().next().getWeight(),
-                    "Ошибка валидации веса ингредиента / ingredient");
-        } catch (Exception e) {
-            throw new ValidationException(e.getMessage());
-        }
         return ResponseEntity.ok(recipesService.createRecipe(recipe));
     }
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Информация успешно была получена",
+            description = "Всё хорошо, запрос выполнился",
             content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "404",
-                    description = "Информация не была получена",
+                    description = "URL неверный или такого действия нет в веб-приложении",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500",
+                    description = "Во время выполнения запроса произошла ошибка на сервере",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400",
+                    description = "Есть ошибка в параметрах запроса",
                     content = {@Content(mediaType = "application/json")})})
     @Operation(method = "Получение рецепта по id.",
             summary = "Получение рецепта по id.", description = "Можно получить информацию")
     @GetMapping("/{id}")
     public ResponseEntity<Recipe> getRecipe(@PathVariable Long id) {
-        Validate.notBlank(getRecipe(id).toString(), "Строка не может быть пустая или значение null");
         return ResponseEntity.of(recipesService.getId(id));
     }
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Информация успешно была получена",
+            description = "Всё хорошо, запрос выполнился",
             content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "404",
-                    description = "Информация не была получена",
+                    description = "URL неверный или такого действия нет в веб-приложении",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500",
+                    description = "Во время выполнения запроса произошла ошибка на сервере",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400",
+                    description = "Есть ошибка в параметрах запроса",
                     content = {@Content(mediaType = "application/json")})})
     @Operation(method = "Редактирование рецепта по id.",
             summary = "Редактирование рецепта по id.", description = "Можно изменить информацию")
     @PutMapping("/{id}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody Recipe recipe) {
-        Validate.notBlank(recipe.toString(), "Строка не может быть пустая или значение null");
         return ResponseEntity.of(recipesService.updateRecipe(id, recipe));
     }
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Информация успешно была получена",
+            description = "Всё хорошо, запрос выполнился",
             content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "404",
-                    description = "Информация не была получена",
+                    description = "URL неверный или такого действия нет в веб-приложении",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500",
+                    description = "Во время выполнения запроса произошла ошибка на сервере",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400",
+                    description = "Есть ошибка в параметрах запроса",
                     content = {@Content(mediaType = "application/json")})})
     @Operation(method = "Удаление рецепта по id.", summary = "Удаление рецепта по id.",
             description = "Можно удалить информацию")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Recipe> deleteRecipe(@PathVariable Long id) {
-        return ResponseEntity.of(recipesService.deleteRecipe(id));
+    public HttpHeaders deleteRecipe(@PathVariable Long id) {
+        ResponseEntity.of(recipesService.deleteRecipe(id));
+        return ResponseEntity.EMPTY.getHeaders();
     }
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",
-            description = "Информация успешно была получена",
+            description = "Всё хорошо, запрос выполнился",
             content = {@Content(mediaType = "application/json")}),
             @ApiResponse(responseCode = "404",
-                    description = "Информация не была получена",
+                    description = "URL неверный или такого действия нет в веб-приложении",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500",
+                    description = "Во время выполнения запроса произошла ошибка на сервере",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400",
+                    description = "Есть ошибка в параметрах запроса",
                     content = {@Content(mediaType = "application/json")})})
     @Operation(method = "Получение списка всех рецептов.", summary = "Получение списка всех рецептов.",
             description = "Можно получить информацию")
     @GetMapping("/")
     public ResponseEntity<Map<Long, Recipe>> getAllRecipes() {
         return ResponseEntity.ok(recipesService.allRecipes());
+    }
+
+    @ApiResponses(value = {@ApiResponse(responseCode = "200",
+            description = "Всё хорошо, запрос выполнился",
+            content = {@Content(mediaType = "text/plain")})})
+    @Operation(method = "Данные всех рецептов в формате txt.",
+            summary = "Данные всех рецептов в формате txt, можете загрузить (принять) файл",
+            description = "Можно получить (принять) данные в формате txt")
+    @GetMapping("/AllRecipes")
+    public ResponseEntity<Object> getAllRecipesExport() {
+        try {
+            Path path = recipesService.createAllRecipes();
+            if (Files.size(path) == 0) {
+                return ResponseEntity.noContent().build();
+            }
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(path.toFile()));
+            return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN).contentLength(Files.size(path))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"AllRecipes.txt\"")
+                    .body(resource);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(e.toString());
+        }
     }
 }

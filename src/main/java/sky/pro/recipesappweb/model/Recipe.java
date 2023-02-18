@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.awt.desktop.ScreenSleepEvent;
 import java.util.List;
 
 
@@ -16,4 +17,13 @@ public class Recipe {
     private int cookingTime;
     private List<Ingredient> ingredients;
     private List<Step> cookingInstructionsSteps;
+
+    @Override
+    public String toString() {
+        return "" +
+                " " + title +
+                " " + cookingTime +
+                " " + ingredients +
+                " " + cookingInstructionsSteps;
+    }
 }

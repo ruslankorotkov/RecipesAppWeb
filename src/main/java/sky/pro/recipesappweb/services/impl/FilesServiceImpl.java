@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import sky.pro.recipesappweb.services.FilesService;
 
-
-import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,12 +15,16 @@ public class FilesServiceImpl implements FilesService {
     private String recipesFilePath;
     @Value("${name.of.recipes.file}")
     private String recipesFileName;
+    @Value("${path.to.ingredients.file}")
+    private String ingredientsFilePath;
+    @Value("${name.of.ingredients.file}")
+    private String ingredientsFileName;
 
     @Override
     public boolean saveToFile(String json) {
         try {
-            deleteRecipesFile();
-            Files.writeString(Path.of(recipesFilePath,recipesFileName),json);
+            deleteFile();
+            Files.writeString(Path.of(recipesFilePath, recipesFileName), json);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,13 +35,14 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public String readFromFile() {
         try {
-            return Files.readString(Path.of(recipesFilePath,recipesFileName));
+            return Files.readString(Path.of(recipesFilePath, recipesFileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private boolean deleteRecipesFile() {
+    @Override
+    public boolean deleteFile() {
         try {
             Path path = Path.of(recipesFilePath, recipesFileName);
             Files.deleteIfExists(path);
@@ -48,5 +52,49 @@ public class FilesServiceImpl implements FilesService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public boolean saveToIngredientsFile(String json) {
+        try {
+            deleteIngredientsFile();
+            Files.writeString(Path.of(ingredientsFilePath, ingredientsFileName), json);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public String readFromIngredientsFile() {
+        try {
+            return Files.readString(Path.of(ingredientsFilePath, ingredientsFileName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteIngredientsFile() {
+        try {
+            Path path = Path.of(ingredientsFilePath, ingredientsFileName);
+            Files.deleteIfExists(path);
+            Files.createFile(path);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public File getRecipesFile() {
+        return new File(recipesFilePath + "/" + recipesFileName);
+    }
+
+    @Override
+    public File getIngredientsFile() {
+        return new File(ingredientsFilePath + "/" + ingredientsFileName);
     }
 }
