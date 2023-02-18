@@ -1,4 +1,4 @@
-package sky.pro.recipesappweb.controllers;
+package sky.pro.recipesappweb.exceptionhandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -71,14 +71,16 @@ public class IngredientServiceimpl implements IngredientService {
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
         }
-        Optional.ofNullable(ingredientMap.replace(id, ingredient));
+        Optional.ofNullable(ingredientMap.put(id, ingredient));
         saveToIngredientsFile();
         return Optional.of(ingredient);
     }
 
     @Override
     public Optional<Ingredient> deleteIngredient(Long id) {
-        return Optional.ofNullable(ingredientMap.remove(id));
+        Optional.of(ingredientMap.remove(id));
+        saveToIngredientsFile();
+        return Optional.empty();
     }
 
     @Override

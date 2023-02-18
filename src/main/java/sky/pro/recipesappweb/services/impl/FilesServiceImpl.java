@@ -19,10 +19,6 @@ public class FilesServiceImpl implements FilesService {
     private String ingredientsFilePath;
     @Value("${name.of.ingredients.file}")
     private String ingredientsFileName;
-    @Value("${path.to.allRecipes.file}")
-    private String allRecipesFilePath;
-    @Value("${name.of.allRecipes.file}")
-    private String allRecipesFileName;
 
     @Override
     public boolean saveToFile(String json) {
@@ -100,10 +96,5 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public File getIngredientsFile() {
         return new File(ingredientsFilePath + "/" + ingredientsFileName);
-    }
-
-    @Override
-    public File getAllRecipes() {
-        return new File(allRecipesFilePath + "/" + allRecipesFileName);
     }
 }

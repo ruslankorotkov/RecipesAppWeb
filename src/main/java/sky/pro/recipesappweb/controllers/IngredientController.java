@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sky.pro.recipesappweb.services.IngredientService;
@@ -94,8 +95,9 @@ public class IngredientController {
     @Operation(method = "Удаление ингредиента.", summary = "Удаление ингредиента.",
             description = "Можно удалить информацию")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Ingredient> deleteIngredient(@PathVariable Long id) {
-        return ResponseEntity.of(ingredientService.deleteIngredient(id));
+    public HttpHeaders deleteIngredient(@PathVariable Long id) {
+        ResponseEntity.of(ingredientService.deleteIngredient(id));
+        return ResponseEntity.EMPTY.getHeaders();
     }
 
     @ApiResponses(value = {@ApiResponse(responseCode = "200",

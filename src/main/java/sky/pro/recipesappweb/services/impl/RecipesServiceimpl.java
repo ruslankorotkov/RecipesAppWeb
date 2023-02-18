@@ -87,14 +87,16 @@ public class RecipesServiceimpl implements RecipesService {
         } catch (Exception e) {
             throw new ValidationException(e.getMessage());
         }
-        Optional.ofNullable(recipesMap.replace(id, recipe));
+        Optional.ofNullable(recipesMap.put(id, recipe));
         saveToFile();
         return Optional.of(recipe);
     }
 
     @Override
     public Optional<Recipe> deleteRecipe(Long id) {
-        return Optional.ofNullable(recipesMap.remove(id));
+        Optional.of(recipesMap.remove(id));
+        saveToFile();
+        return Optional.empty();
     }
 
     @Override
@@ -123,11 +125,11 @@ public class RecipesServiceimpl implements RecipesService {
 
     @Override
     public Path createAllRecipes() throws IOException {
-        Path path = filesService.getAllRecipes().toPath();
+        Path path = filesService.getIngredientsFile().toPath();
         String listStop = "*";
         for (Recipe element : recipesMap.values()) {
             try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)) {
-                writer.append(element.getTitle()+ "\n"
+                writer.append(element.getTitle() + "\n"
                         + "\nВремя приготовления: " +
                         element.getCookingTime()).append(" минут\n");
 

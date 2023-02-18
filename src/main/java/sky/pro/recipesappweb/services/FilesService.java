@@ -21,7 +21,4 @@ public interface FilesService {
     File getRecipesFile();
 
     File getIngredientsFile();
-
-    File getAllRecipes();
-
 }
